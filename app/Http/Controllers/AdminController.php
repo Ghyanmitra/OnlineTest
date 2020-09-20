@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,6 +14,7 @@ class AdminController extends Controller
     //
     public function home()
     {
-        return view('admin');
+        $users=User::sortable()->where('role','Guest')->paginate(5);
+        return view('admin',["users" =>$users]);
     }
 }

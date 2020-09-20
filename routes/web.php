@@ -20,6 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/exampage', 'HomeController@getExamDetails')->name('exampage');
+Route::post('/submitexam', 'HomeController@submitExamData')->name('submitexam');
 
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin', 'AdminController@home');

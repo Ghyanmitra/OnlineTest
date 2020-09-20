@@ -2,22 +2,39 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    @if ($users[0])
+        <table class="table table-hover" id="datatable">
+            <thead>
+                <tr>
+                <th>@sortablelink('id')</th>
+                <th>@sortablelink('name')</th>
+                <th>@sortablelink('email')</th>
+                <th>@sortablelink('mobileno')</th>
+                <th>@sortablelink('marks')</th>
+                <th>@sortablelink('created_at')</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($users as $row)
+                    <tr>
+                        <th>{{ $row->id }}</th>
+                        <td>{{ $row->name }}</td>
+                        <td>{{ $row->email }}</td>
+                        <td>{{ $row->mobileno }}</td>
+                        <td>{{ $row->marks?$row->marks:0 }}</td>
+                        <td>{{ date("d-m-Y H:i:s A", strtotime($row->created_at)) }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-                    {{ __('You are logged in As Admin!') }}
-                </div>
-            </div>
-        </div>
-    </div>
+        {{$users->links()}}
+
+    @else
+
+        <div><h4>No Record Found</h4></div>
+
+    @endif
 </div>
 @endsection
