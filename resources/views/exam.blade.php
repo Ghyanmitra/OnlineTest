@@ -11,9 +11,9 @@
         <div class="col-md-8">
             <div class="card">
 
-                <div class="card-header">{{ __('Please select correct Answer') }}</div>
+                <div class="card-header" id="status"></div>
 
-                <form method="POST" action="{{ route('submitexam') }}" >
+                <form method="POST" action="{{ route('submitexam') }}" id ="test_form">
                         @csrf
 
                         @foreach ($exam_data as $key => $items)
@@ -45,5 +45,33 @@
         </div>
     </div>
 </div>
+<script type = "text/javascript">
 
+    document.onkeydown = function(){
+    switch (event.keyCode){
+            case 116 : //F5 button
+                event.returnValue = false;
+                event.keyCode = 0;
+                return false;
+            case 82 : //R button
+                if (event.ctrlKey){
+                    event.returnValue = false;
+                    event.keyCode = 0;
+                    return false;
+                }
+        }
+    }
+
+    secs = 600;
+    timer = setInterval(function () {
+        var element = document.getElementById("status");
+        element.innerHTML ="Please select correct Answer <b>"+ secs+" Seconds</b> left";
+        if(secs < 1){
+            clearInterval(timer);
+            document.getElementById('test_form').submit();
+        }
+        secs--;
+    }, 1000)
+
+</script>
 @endsection
